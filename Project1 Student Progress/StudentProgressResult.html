@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Student Progress Result </title>
+		<script>
+		function setPersonInfo(){
+		var StuID = document.getElementById('StudentID').value;
+		var objConnection = new ActiveXObject("adodb.connection");
+		var strConn = "driver={sql server};server=JAZZER3\SQLEXPRESS;database=StudentProgress;uid=JAZZER3\rjazmin;password=''";
+		objConnection.Open(strConn);
+		var rs = new ActiveXObject("ADODB.Recordset");
+		var strQuery = "SELECT PercentLeftBeforeCompletion = (5 - (COUNT(Chapter1CompleteDate) + COUNT(Chapter2CompleteDate) + COUNT(Chapter3CompleteDate) + COUNT(Chapter4CompleteDate) + COUNT(Chapter5CompleteDate)))*(.1)FROM [dbo].[StudentProgressTable] where StudentID = " + StuID;
+		
+		rs.Open(strQuery, objConnection);
+		rs.MoveFirst();
+		document.getElementById('percentageleft').value = rs;	
+		}
+		</script>
+	</head>
+	<body>
+		<h1>Student Progress Result </h1>
+		<p>(Find the percentage the Student have left before they are done with the program.)</p>
+		<p>Please enter your StudentID:</p>
+		<p><input type="text" id="StudentID"><button type="button" onclick="getPersonInfo()">Submit</button></p>
+		<p>Percentage Left:
+		<input type="text" id="percentageleft">
+		</p>
+	</body>
+</html>
